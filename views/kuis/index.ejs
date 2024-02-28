@@ -11,52 +11,49 @@
 </head>
 
 <body>
-  <%- include('../partials/navbar.ejs') %>
-  <div class="container mt-5">
-    <h1 class="mb-4">Data User</h1>
+    <%- include('../partials/navbar.ejs') %>
+  <div class="container my-5">
+
+    <h1 class="mb-4">Data Kuis</h1>
     <div class="table-responsive">
-      <table class="table">
+      <table class="table text-center">
         <thead class="thead-light">
           <tr>
-            <th scope="col">Nama</th>
-            <th scope="col">Kelas</th>
-            <th scope="col">Video</th>
-            <th scope="col">Materi</th>
-            <th scope="col">Kuis</th>
-            <th scope="col">Bintang</th>
-            <th scope="col">Tindakan</th>
+            <th scope="col">Soal</th>
+            <th scope="col">Level</th>
+            <th scope="col" width="10%">Bilangan 1</th>
+            <th scope="col" width="10%">Operasi</th>
+            <th scope="col" width="10%">Bilangan 2</th>
+            <th scope="col" width="10%">Jawaban</th>
+            <th scope="col" width="20%">Tindakan</th>
           </tr>
         </thead>
         <tbody>
-          <% users.forEach(user=> { %>
+          <% kuises.forEach(kuis=> { %>
             <tr>
               <td>
-                <%= user.nama %>
+                <%= kuis.nama %>
               </td>
               <td>
-                <% if (user.kelas) { %>
-                  <%= user.kelas %>
-                    <% } else { %>
-                      -
-                      <% } %>
+                Level <%= kuis.level_id %>
               </td>
               <td>
-                <%= user.total_video %>
+                <%= kuis.soal_atas %>
               </td>
               <td>
-                <%= user.total_materi %>
+                <%= kuis.operasi %>
               </td>
               <td>
-                <%= user.total_kuis %>
+                <%= kuis.soal_bawah %>
               </td>
               <td>
-                <%= user.total_bintang %>
+                <%= kuis.jawaban %>
               </td>
               <td>
                 <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#editModal"
-                  data-id="<%= user.id %>">Edit</button>
+                  data-id="<%= kuis.id %>">Edit</button>
                 <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#deleteModal"
-                  data-id="<%= user.id %>">Delete</button>
+                  data-id="<%= kuis.id %>">Delete</button>
               </td>
             </tr>
             <% }); %>
@@ -71,13 +68,13 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="editModalLabel">Edit User</h5>
+          <h5 class="modal-title" id="editModalLabel">Edit kuis</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <input type="hidden" id="editUserId">
+          <input type="hidden" id="editkuisId">
           <!-- Form edit data pengguna disini -->
         </div>
         <div class="modal-footer">

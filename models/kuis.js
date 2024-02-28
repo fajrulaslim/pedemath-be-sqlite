@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../database');
 
-const User = sequelize.define('User', {
+const Kuis = sequelize.define('Kuis', {
     id: {
         allowNull: false,
         autoIncrement: true,
@@ -9,28 +9,24 @@ const User = sequelize.define('User', {
         type: DataTypes.INTEGER
     },
     nama: {
-        allowNull: false,
         type: DataTypes.STRING,
     },
-    kelas: {
+    level_id: {
+        type: DataTypes.INTEGER,
+    },
+    soal_atas: {
+        type: DataTypes.INTEGER,
+    },
+    operasi: {
+        defaultValue: "+",
         type: DataTypes.STRING,
     },
-    total_video: {
-        defaultValue: 0,
+    soal_bawah: {
         type: DataTypes.INTEGER,
     },
-    total_materi: {
-        defaultValue: 0,
+    jawaban: {
         type: DataTypes.INTEGER,
     },
-    total_kuis: {
-        defaultValue: 0,
-        type: DataTypes.INTEGER,
-    },
-    total_bintang: {
-        defaultValue: 0,
-        type: DataTypes.INTEGER,
-    }
 });
 
-module.exports = User;
+module.exports = Kuis;
