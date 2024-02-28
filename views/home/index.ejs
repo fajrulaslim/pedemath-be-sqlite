@@ -18,6 +18,7 @@
       <table class="table">
         <thead class="thead-light">
           <tr>
+            <th scope="col" width="5%">#</th>
             <th scope="col">Nama</th>
             <th scope="col">Kelas</th>
             <th scope="col">Video</th>
@@ -28,8 +29,11 @@
           </tr>
         </thead>
         <tbody>
-          <% users.forEach(user=> { %>
+          <% users.forEach((user, i)=> { %>
             <tr>
+              <td>
+                <%= i+1 %>
+              </td>
               <td>
                 <%= user.nama %>
               </td>

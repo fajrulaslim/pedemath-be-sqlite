@@ -19,6 +19,7 @@
       <table class="table text-center">
         <thead class="thead-light">
           <tr>
+            <th scope="col" width="5%">#</th>
             <th scope="col">Soal</th>
             <th scope="col">Level</th>
             <th scope="col" width="10%">Bilangan 1</th>
@@ -29,8 +30,11 @@
           </tr>
         </thead>
         <tbody>
-          <% kuises.forEach(kuis=> { %>
+          <% kuises.forEach((kuis, i)=> { %>
             <tr>
+              <td>
+                <%= i+1 %>
+              </td>
               <td>
                 <%= kuis.nama %>
               </td>
