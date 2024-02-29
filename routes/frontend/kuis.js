@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 router.post('/add', async (req, res) => {
   try {
     const createKuis = await Kuis.create(req.body)
-    res.redirect(`/`);
+    res.redirect(`/kuis`);
   } catch (error) {
     res.status(500).send('Internal Server Error');
   }
@@ -26,7 +26,7 @@ router.post('/edit/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const updatedKuis = await Kuis.update(req.body, { where: { id } })
-    res.redirect(`/`);
+    res.redirect(`/kuis`);
   } catch (error) {
     res.status(500).send('Internal Server Error');
   }
@@ -36,7 +36,7 @@ router.post('/delete/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const deleteKuis = await Kuis.destroy({ where: { id } })
-    res.redirect(`/`);
+    res.redirect(`/kuis`);
   } catch (error) {
     res.status(500).send('Internal Server Error');
   }

@@ -88,14 +88,18 @@
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label for="nama" class="mb-0">Soal</label>
+                <label for="nama" class="mb-0">Nama Soal</label>
                 <input type="text" name="nama" id="nama" class="form-control">
               </div>
               <div class="mb-3">
                 <label for="level_id" class="mb-0">Level</label>
                 <select name="level_id" id="level_id" class="form-control">
-                  <% levels.forEach((level, i)=> { %>
-                    <option value="<%= level.id %>"><%= level.nama %></option>
+                  <% levels.forEach((level, i) => { %>
+                    <% if(i == 0) { %>
+                      <option value="<%= level.id %>" selected><%= level.nama %></option>
+                    <% } else { %>
+                      <option value="<%= level.id %>" selected><%= level.nama %></option>
+                    <% } %>
                   <% }); %>
                 </select>
               </div>
@@ -105,7 +109,7 @@
               </div>
               <div class="mb-3">
                 <label for="operasi" class="mb-0">Operasi</label>
-                <input type="text"name="operasi" id="operasi" class="form-control" value="+" readonly>
+                <input type="text" name="operasi" id="operasi" class="form-control" value="+" readonly>
               </div>
               <div class="mb-3">
                 <label for="soal_bawah" class="mb-0">Soal 2</label>
@@ -113,7 +117,7 @@
               </div>
               <div class="mb-3">
                 <label for="jawaban" class="mb-0">Jawaban</label>
-                <input type="number" name="jawaban" id="jawaban" class="form-control" readonly>
+                <input type="number" name="jawaban" id="jawaban" class="form-control">
               </div>
             </div>
             <div class="modal-footer">
@@ -159,12 +163,11 @@
         $('#kuisModal').modal('show');
         $('#title-form').html('Add Kuis')
         $('#nama').val('')
-        $('#level_id').val('')
+        $('#level_id').val(1)
         $('#soal_atas').val(0)
-        $('#operasi').val(0)
         $('#soal_bawah').val(0)
         $('#jawaban').val(0)
-        $('#form-kuis').attr('action', `/add`)
+        $('#form-kuis').attr('action', `/kuis/add`)
       }
 
       editKuis = (id, nama, level_id, soal_atas, operasi, soal_bawah, jawaban) => {
@@ -176,17 +179,21 @@
         $('#operasi').val(operasi)
         $('#soal_bawah').val(soal_bawah)
         $('#jawaban').val(jawaban)
-        $('#form-kuis').attr('action', `/edit/${id}`)
+        $('#form-kuis').attr('action', `/kuis/edit/${id}`)
       }
 
       deleteKuis = (id) => {
         $('#deleteModal').modal('show');
-        $('#form-delete-kuis').attr('action', `/delete/${id}`)
+        $('#form-delete-kuis').attr('action', `/kuis/delete/${id}`)
+      }
+
+      hitungHasil = () => {        
+        $('#jawaban').val($('#soal_atas').val(soal_atas) + $('#soal_bawah').val(soal_bawah))
       }
 
       resetForm = () => {
         $('#title-form').html('Add Kuis')
-        $('#form-kuis').attr('action', `/add`)
+        $('#form-kuis').attr('action', `/kuis/add`)
       }
     </script>
 </body>
