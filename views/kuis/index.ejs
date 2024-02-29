@@ -61,7 +61,7 @@
                 <td>
                   <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal"
                     data-target="#kuisModal"
-                    onclick="editKuis(`<%= kuis.id %>`, `<%= kuis.nama %>`, `<%= kuis.kelas %>`, `<%= kuis.total_video %>`, `<%= kuis.total_materi %>`, `<%= kuis.total_kuis %>`, `<%= kuis.total_bintang %>`)">
+                    onclick="editKuis(`<%= kuis.id %>`, `<%= kuis.nama %>`, `<%= kuis.level_id %>`, `<%= kuis.soal_atas %>`, `<%= kuis.operasi %>`, `<%= kuis.soal_bawah %>`, `<%= kuis.jawaban %>`)">
                     Edit
                   </button>
                   <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal"
@@ -159,23 +159,23 @@
         $('#kuisModal').modal('show');
         $('#title-form').html('Add Kuis')
         $('#nama').val('')
-        $('#kelas').val('')
-        $('#total_video').val(0)
-        $('#total_materi').val(0)
-        $('#total_kuis').val(0)
-        $('#total_bintang').val(0)
+        $('#level_id').val('')
+        $('#soal_atas').val(0)
+        $('#operasi').val(0)
+        $('#soal_bawah').val(0)
+        $('#jawaban').val(0)
         $('#form-kuis').attr('action', `/add`)
       }
 
-      editKuis = (id, nama, kelas, total_video, total_materi, total_kuis, total_bintang) => {
+      editKuis = (id, nama, level_id, soal_atas, operasi, soal_bawah, jawaban) => {
         $('#kuisModal').modal('show');
         $('#title-form').html('Edit Kuis')
         $('#nama').val(nama)
-        $('#kelas').val(kelas)
-        $('#total_video').val(total_video)
-        $('#total_materi').val(total_materi)
-        $('#total_kuis').val(total_kuis)
-        $('#total_bintang').val(total_bintang)
+        $('#level_id').val(level_id)
+        $('#soal_atas').val(soal_atas)
+        $('#operasi').val(operasi)
+        $('#soal_bawah').val(soal_bawah)
+        $('#jawaban').val(jawaban)
         $('#form-kuis').attr('action', `/edit/${id}`)
       }
 
