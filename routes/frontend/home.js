@@ -11,12 +11,30 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.post('/add', async (req, res) => {
+  try {
+    const createUser = await User.create(req.body)
+    res.redirect(`/`);
+  } catch (error) {
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 router.post('/edit/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(req.body)
     const updatedUser = await User.update(req.body, { where: { id } })
-    res.redirect('/');
+    res.redirect(`/`);
+  } catch (error) {
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+router.post('/delete/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleteUser = await User.destroy({ where: { id } })
+    res.redirect(`/`);
   } catch (error) {
     res.status(500).send('Internal Server Error');
   }

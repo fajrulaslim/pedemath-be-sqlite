@@ -3,6 +3,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const bodyParser = require('body-parser');
+const logger = require('morgan');
 const sequelize = require('./database');
 
 const homePageRoutes = require('./routes/frontend/home');
@@ -33,10 +34,9 @@ app.use(
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
+app.use(logger('dev'));
 app.use(bodyParser.json());
-
-// app.get('/', renderHomePage);
-// app.get('/kuis', renderKuisPage);
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', homePageRoutes);
 app.use('/kuis', kuisPageRoutes);

@@ -13,7 +13,13 @@
 <body>
   <%- include('../partials/navbar.ejs') %>
     <div class="container mt-5">
-      <h1 class="mb-4">Data User</h1>
+      <div  class="mb-4 d-flex align-items-end justify-content-between">
+        <h1>Data User</h1>
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+        data-target="#userModal" onclick="addUser()">
+          Add User
+        </button>
+      </div>
       <div class="table-responsive">
         <table class="table">
           <thead class="thead-light">
@@ -58,12 +64,12 @@
                 </td>
                 <td>
                   <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal"
-                    data-target="#editModal"
+                    data-target="#userModal"
                     onclick="editUser(`<%= user.id %>`, `<%= user.nama %>`, `<%= user.kelas %>`, `<%= user.total_video %>`, `<%= user.total_materi %>`, `<%= user.total_kuis %>`, `<%= user.total_bintang %>`)">
                     Edit
                   </button>
                   <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal"
-                    data-target="#deleteModal" data-id="<%= user.id %>">Delete</button>
+                    data-target="#deleteModal" onclick="deleteUser(`<%= user.id %>`)">Delete</button>
                 </td>
               </tr>
               <% }); %>
@@ -72,8 +78,8 @@
       </div>
     </div>
 
-    <!-- Edit Modal -->
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+    <!-- User Modal -->
+    <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel"
       aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -95,23 +101,23 @@
               </div>
               <div class="mb-3">
                 <label for="total_video" class="mb-0">Total Video</label>
-                <input type="text" name="total_video" id="total_video" class="form-control">
+                <input type="number" min="0" step="1" name="total_video" id="total_video" class="form-control">
               </div>
               <div class="mb-3">
                 <label for="total_materi" class="mb-0">Total Materi</label>
-                <input type="text" name="total_materi" id="total_materi" class="form-control">
+                <input type="number" min="0" step="1" name="total_materi" id="total_materi" class="form-control">
               </div>
               <div class="mb-3">
                 <label for="total_kuis" class="mb-0">Total Kuis</label>
-                <input type="text" name="total_kuis" id="total_kuis" class="form-control">
+                <input type="number" min="0" step="1" name="total_kuis" id="total_kuis" class="form-control">
               </div>
               <div class="mb-3">
                 <label for="total_bintang" class="mb-0">Total Bintang</label>
-                <input type="text" name="total_bintang" id="total_bintang" class="form-control">
+                <input type="number" min="0" step="1" name="total_bintang" id="total_bintang" class="form-control">
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+              <button type="reset" class="btn btn-secondary" data-dismiss="modal" onclick="resetForm()">Batal</button>
               <button type="submit" class="btn btn-primary" id="saveEditButton">Simpan</button>
             </div>
           </form>
@@ -119,11 +125,28 @@
       </div>
     </div>
 
-
     <!-- Delete Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
       aria-hidden="true">
-      <!-- Konten modal disini -->
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form action="" method="POST" id="form-delete-user">
+            <div class="modal-header">
+              <h5 class="modal-title" id="title-form">Delete User</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Apakah kamu yakin ingin menghapus data user ini?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+              <button type="submit" class="btn btn-danger">Hapus</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
     <!-- Bootstrap JS -->
@@ -132,10 +155,22 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
+      addUser = () => {
+        $('#userModal').modal('show');
+        $('#title-form').html('Add User')
+        $('#nama').val('')
+        $('#kelas').val('')
+        $('#total_video').val(0)
+        $('#total_materi').val(0)
+        $('#total_kuis').val(0)
+        $('#total_bintang').val(0)
+        $('#form-user').attr('action', `/add`)
+      }
+
       editUser = (id, nama, kelas, total_video, total_materi, total_kuis, total_bintang) => {
-        $('#editModal').modal('show');
+        $('#userModal').modal('show');
         $('#title-form').html('Edit User')
-        $('#nama').val(nama+'1')
+        $('#nama').val(nama)
         $('#kelas').val(kelas)
         $('#total_video').val(total_video)
         $('#total_materi').val(total_materi)
@@ -144,12 +179,15 @@
         $('#form-user').attr('action', `/edit/${id}`)
       }
 
-      // resetForm = () => {
-      //   $('.title-form').html('Add Data Nasabah')
-      //   $('#form-nasabah').attr('action', `/tugas1/add`)
-      //   $('.btnSubmit').html('Submit')
-      //   $('.btnCancel').addClass('d-none')
-      // }
+      deleteUser = (id) => {
+        $('#deleteModal').modal('show');
+        $('#form-delete-user').attr('action', `/delete/${id}`)
+      }
+
+      resetForm = () => {
+        $('#title-form').html('Add User')
+        $('#form-user').attr('action', `/add`)
+      }
     </script>
 
 </body>
