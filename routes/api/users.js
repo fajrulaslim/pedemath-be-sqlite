@@ -12,8 +12,8 @@ router.get('/', async (req, res) => {
     if(nama) {
       const user = await User.findOne({
         where: {
-          nama,
-          kelas: kelas || ''
+          nama: nama.toUpperCase(),
+          kelas: kelas ? kelas : ''
         }
       });
       res.json(user);
