@@ -11,4 +11,15 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.post('/edit/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(req.body)
+    const updatedUser = await User.update(req.body, { where: { id } })
+    res.redirect('/');
+  } catch (error) {
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 module.exports = router;
