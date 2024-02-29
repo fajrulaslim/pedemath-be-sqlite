@@ -11,95 +11,184 @@
 </head>
 
 <body>
-    <%- include('../partials/navbar.ejs') %>
-  <div class="container my-5">
-
-    <h1 class="mb-4">Data Kuis</h1>
-    <div class="table-responsive">
-      <table class="table text-center">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col" width="5%">#</th>
-            <th scope="col">Soal</th>
-            <th scope="col">Level</th>
-            <th scope="col" width="10%">Bilangan 1</th>
-            <th scope="col" width="10%">Operasi</th>
-            <th scope="col" width="10%">Bilangan 2</th>
-            <th scope="col" width="10%">Jawaban</th>
-            <th scope="col" width="20%">Tindakan</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% kuises.forEach((kuis, i)=> { %>
+  <%- include('../partials/navbar.ejs') %>
+    <div class="container my-5">
+      <div class="mb-4 d-flex align-items-end justify-content-between">
+        <h1>Data Kuis</h1>
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#kuisModal"
+          onclick="addKuis()">
+          Add Kuis
+        </button>
+      </div>
+      <div class="table-responsive">
+        <table class="table text-center">
+          <thead class="thead-light">
             <tr>
-              <td>
-                <%= i+1 %>
-              </td>
-              <td>
-                <%= kuis.nama %>
-              </td>
-              <td>
-                Level <%= kuis.level_id %>
-              </td>
-              <td>
-                <%= kuis.soal_atas %>
-              </td>
-              <td>
-                <%= kuis.operasi %>
-              </td>
-              <td>
-                <%= kuis.soal_bawah %>
-              </td>
-              <td>
-                <%= kuis.jawaban %>
-              </td>
-              <td>
-                <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#editModal"
-                  data-id="<%= kuis.id %>">Edit</button>
-                <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#deleteModal"
-                  data-id="<%= kuis.id %>">Delete</button>
-              </td>
+              <th scope="col" width="5%">#</th>
+              <th scope="col">Soal</th>
+              <th scope="col">Level</th>
+              <th scope="col" width="10%">Bilangan 1</th>
+              <th scope="col" width="10%">Operasi</th>
+              <th scope="col" width="10%">Bilangan 2</th>
+              <th scope="col" width="10%">Jawaban</th>
+              <th scope="col" width="20%">Tindakan</th>
             </tr>
-            <% }); %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% kuises.forEach((kuis, i)=> { %>
+              <tr>
+                <td>
+                  <%= i+1 %>
+                </td>
+                <td>
+                  <%= kuis.nama %>
+                </td>
+                <td>
+                  Level <%= kuis.level_id %>
+                </td>
+                <td>
+                  <%= kuis.soal_atas %>
+                </td>
+                <td>
+                  <%= kuis.operasi %>
+                </td>
+                <td>
+                  <%= kuis.soal_bawah %>
+                </td>
+                <td>
+                  <%= kuis.jawaban %>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal"
+                    data-target="#kuisModal"
+                    onclick="editKuis(`<%= kuis.id %>`, `<%= kuis.nama %>`, `<%= kuis.kelas %>`, `<%= kuis.total_video %>`, `<%= kuis.total_materi %>`, `<%= kuis.total_kuis %>`, `<%= kuis.total_bintang %>`)">
+                    Edit
+                  </button>
+                  <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal"
+                    data-target="#deleteModal" onclick="deleteKuis(`<%= kuis.id %>`)">Delete</button>
+                </td>
+              </tr>
+              <% }); %>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
 
-  <!-- Edit Modal -->
-  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editModalLabel">Edit kuis</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" id="editkuisId">
-          <!-- Form edit data pengguna disini -->
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="saveEditButton">Save changes</button>
+    <!-- User Modal -->
+    <div class="modal fade" id="kuisModal" tabindex="-1" role="dialog" aria-labelledby="kuisModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form action="" method="POST" id="form-kuis">
+            <div class="modal-header">
+              <h5 class="modal-title" id="title-form">Edit Kuis</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="nama" class="mb-0">Soal</label>
+                <input type="text" name="nama" id="nama" class="form-control">
+              </div>
+              <div class="mb-3">
+                <label for="level_id" class="mb-0">Level</label>
+                <select name="level_id" id="level_id" class="form-control">
+                  <% levels.forEach((level, i)=> { %>
+                    <option value="<%= level.id %>"><%= level.nama %></option>
+                  <% }); %>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="soal_atas" class="mb-0">Soal 1</label>
+                <input type="number" name="soal_atas" id="soal_atas" class="form-control">
+              </div>
+              <div class="mb-3">
+                <label for="operasi" class="mb-0">Operasi</label>
+                <input type="text"name="operasi" id="operasi" class="form-control" value="+" readonly>
+              </div>
+              <div class="mb-3">
+                <label for="soal_bawah" class="mb-0">Soal 2</label>
+                <input type="number" name="soal_bawah" id="soal_bawah" class="form-control">
+              </div>
+              <div class="mb-3">
+                <label for="jawaban" class="mb-0">Jawaban</label>
+                <input type="number" name="jawaban" id="jawaban" class="form-control" readonly>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="reset" class="btn btn-secondary" data-dismiss="modal" onclick="resetForm()">Batal</button>
+              <button type="submit" class="btn btn-primary" id="saveEditButton">Simpan</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-  </div>
 
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form action="" method="POST" id="form-delete-kuis">
+            <div class="modal-header">
+              <h5 class="modal-title" id="title-form">Delete User</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Apakah kamu yakin ingin menghapus data kuis ini?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+              <button type="submit" class="btn btn-danger">Hapus</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
-  <!-- Delete Modal -->
-  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-    aria-hidden="true">
-    <!-- Konten modal disini -->
-  </div>
+    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-  <!-- Bootstrap JS -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      addKuis = () => {
+        $('#kuisModal').modal('show');
+        $('#title-form').html('Add Kuis')
+        $('#nama').val('')
+        $('#kelas').val('')
+        $('#total_video').val(0)
+        $('#total_materi').val(0)
+        $('#total_kuis').val(0)
+        $('#total_bintang').val(0)
+        $('#form-kuis').attr('action', `/add`)
+      }
+
+      editKuis = (id, nama, kelas, total_video, total_materi, total_kuis, total_bintang) => {
+        $('#kuisModal').modal('show');
+        $('#title-form').html('Edit Kuis')
+        $('#nama').val(nama)
+        $('#kelas').val(kelas)
+        $('#total_video').val(total_video)
+        $('#total_materi').val(total_materi)
+        $('#total_kuis').val(total_kuis)
+        $('#total_bintang').val(total_bintang)
+        $('#form-kuis').attr('action', `/edit/${id}`)
+      }
+
+      deleteKuis = (id) => {
+        $('#deleteModal').modal('show');
+        $('#form-delete-kuis').attr('action', `/delete/${id}`)
+      }
+
+      resetForm = () => {
+        $('#title-form').html('Add Kuis')
+        $('#form-kuis').attr('action', `/add`)
+      }
+    </script>
 </body>
 
 </html>
