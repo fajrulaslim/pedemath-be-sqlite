@@ -87,27 +87,27 @@
             <div class="modal-body">
               <div class="mb-3">
                 <label for="nama" class="mb-0">Nama</label>
-                <input type="text" id="nama" class="form-control">
+                <input type="text" name="nama" id="nama" class="form-control">
               </div>
               <div class="mb-3">
                 <label for="kelas" class="mb-0">Kelas</label>
-                <input type="text" id="kelas" class="form-control">
+                <input type="text" name="kelas" id="kelas" class="form-control">
               </div>
               <div class="mb-3">
                 <label for="total_video" class="mb-0">Total Video</label>
-                <input type="text" id="total_video" class="form-control">
+                <input type="text" name="total_video" id="total_video" class="form-control">
               </div>
               <div class="mb-3">
                 <label for="total_materi" class="mb-0">Total Materi</label>
-                <input type="text" id="total_materi" class="form-control">
+                <input type="text" name="total_materi" id="total_materi" class="form-control">
               </div>
               <div class="mb-3">
                 <label for="total_kuis" class="mb-0">Total Kuis</label>
-                <input type="text" id="total_kuis" class="form-control">
+                <input type="text" name="total_kuis" id="total_kuis" class="form-control">
               </div>
               <div class="mb-3">
                 <label for="total_bintang" class="mb-0">Total Bintang</label>
-                <input type="text" id="total_bintang" class="form-control">
+                <input type="text" name="total_bintang" id="total_bintang" class="form-control">
               </div>
             </div>
             <div class="modal-footer">
@@ -135,7 +135,7 @@
       editUser = (id, nama, kelas, total_video, total_materi, total_kuis, total_bintang) => {
         $('#editModal').modal('show');
         $('#title-form').html('Edit User')
-        $('#nama').val(nama)
+        $('#nama').val(nama+'1')
         $('#kelas').val(kelas)
         $('#total_video').val(total_video)
         $('#total_materi').val(total_materi)
