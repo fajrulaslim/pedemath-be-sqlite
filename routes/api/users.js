@@ -8,8 +8,19 @@ const { getUsers } = require('../../controllers/userController');
 // Mendapatkan semua pengguna
 router.get('/', async (req, res) => {
   try {
-    const users = await User.findAll();
-    res.json(users);
+    const { nama, kelas } = req.query
+    if(nama) {
+      const user = await User.findOne({
+        where: {
+          nama,
+          kelas: kelas || ''
+        }
+      });
+      res.json(user);
+    } else {
+      const users = await User.findAll();
+      res.json(users);
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
