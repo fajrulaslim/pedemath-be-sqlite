@@ -8,23 +8,28 @@ const { getUsers } = require('../../controllers/userController');
 // Mendapatkan semua pengguna
 router.get('/', async (req, res) => {
   try {
-    const { nama, kelas } = req.query
-    if(nama) {
-      const user = await User.findOne({
-        where: {
-          nama: nama.toUpperCase(),
-          kelas: kelas ? kelas : ''
-        }
-      });
-      res.json(user);
-    } else {
-      const users = await User.findAll();
-      res.json(users);
-    }
+    const users = await User.findAll();
+    res.json(users);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
+
+router.post('/login', async (req, res) => {
+  try {
+    const { nama, kelas } = req.body
+    const user = await User.findOne({
+      where: {
+        nama: nama.toUpperCase(),
+        kelas: kelas ? kelas : ''
+      }
+    });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 
 // Menambah pengguna baru
 router.post('/', async (req, res) => {
