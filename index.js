@@ -4,11 +4,15 @@ require("dotenv").config();
 
 const bodyParser = require('body-parser');
 const sequelize = require('./database');
-const userRoutes = require('./routes/users');
-const levelRoutes = require('./routes/levels');
-const kuisRoutes = require('./routes/kuises');
 
-const { renderHomePage } = require('./controllers/homeController');
+const homePageRoutes = require('./routes/frontend/home');
+const kuisPageRoutes = require('./routes/frontend/kuis');
+
+const userRoutes = require('./routes/api/users');
+const levelRoutes = require('./routes/api/levels');
+const kuisRoutes = require('./routes/api/kuises');
+
+const { renderHomePage, editUser } = require('./controllers/homeController');
 const { renderKuisPage } = require('./controllers/kuisController');
 
 const app = express();
@@ -31,12 +35,15 @@ app.set('views', 'views');
 
 app.use(bodyParser.json());
 
-app.get('/', renderHomePage);
-app.get('/kuis', renderKuisPage);
+// app.get('/', renderHomePage);
+// app.get('/kuis', renderKuisPage);
 
-app.use('/users', userRoutes);
-app.use('/levels', levelRoutes);
-app.use('/kuises', kuisRoutes);
+app.use('/', homePageRoutes);
+app.use('/kuis', kuisPageRoutes);
+
+app.use('/api/users', userRoutes);
+app.use('/api/levels', levelRoutes);
+app.use('/api/kuises', kuisRoutes);
 
 sequelize.sync().then(() => {
   app.listen(PORT, () => {

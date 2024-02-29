@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Kuis = require('../models/kuis');
+const Kuis = require('../../models/kuis');
 
 // Mendapatkan semua pengguna
 router.get('/', async (req, res) => {
