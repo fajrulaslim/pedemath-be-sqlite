@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Kuis = require('../../models/kuis');
 
-// Mendapatkan semua pengguna
 router.get('/', async (req, res) => {
   try {
     const kuises = await Kuis.findAll();
@@ -12,7 +11,18 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Menambah pengguna baru
+router.get('/level/:id', async (req, res) => {
+  const id = req.params.id;
+  try {
+    const kuises = await Kuis.findAll({
+      where: { level_id: id }
+    });
+    res.json(kuises);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 router.post('/', async (req, res) => {
   const kuis = req.body;
   try {
@@ -23,7 +33,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Mendapatkan detail pengguna
 router.get('/:id', async (req, res) => {
   const id = req.params.id;
   try {
@@ -38,7 +47,6 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Mengubah data pengguna
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -49,7 +57,6 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// Menghapus pengguna
 router.delete('/:id', async (req, res) => {
   const id = req.params.id;
   try {
