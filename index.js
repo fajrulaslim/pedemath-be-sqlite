@@ -23,6 +23,9 @@ app.use(
   cors({
     origin: [
       process.env.FE_URL,
+      "http://pedemath.com",
+      "https://pedemath.com",
+      "https://www.pedemath.com",
       "https://pedemath.vercel.app",
       "http://localhost:50000",
     ],
